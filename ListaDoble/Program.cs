@@ -14,6 +14,12 @@ namespace ListaDoble
             lista_doble.insertarPrincipio(16);
             lista_doble.insertarPrincipio(5);
             lista_doble.insertarPrincipio(2023);
+            lista_doble.ImprimirIzquierda();
+            Console.WriteLine("Inserto el 3 al final");
+            lista_doble.InsertarFinal(3);
+            lista_doble.ImprimirIzquierda();
+            Console.ReadLine();
+            lista_doble.ImprimirDerecha();
             Console.ReadLine();
         }
     }
@@ -26,6 +32,46 @@ namespace ListaDoble
         {
             this.cabeza = null;
             this.cola = null;
+        }
+        public void ImprimirIzquierda()
+        {
+            Nodo nodo = cabeza;
+            while(nodo!= null)
+            {
+                Console.WriteLine(nodo.Valor+"-");
+                nodo = nodo.Siguiente;
+            }
+        }
+        public void ImprimirDerecha()
+        {
+            Nodo nodo = cola;
+            while (nodo != null)
+            {
+                Console.WriteLine(nodo.Valor + "-");
+                nodo = nodo.Anterior;
+            }
+        }
+        public void InsertarFinal (int valor)
+        {   //1-Creo nuevo nodo
+            Nodo nuevo_nodo = new Nodo(valor);
+            if(cabeza==null)
+            {
+                cabeza = nuevo_nodo;
+                cola = nuevo_nodo;
+            }
+            else
+            {
+                //2-Como voy a meterlo al final(después de la cola), tengo que "recordar"
+                //la antigua_cola:
+                Nodo antigua_cola = cola;
+                //3-El siguiente a la antigua_cola es 
+                antigua_cola.Siguiente = nuevo_nodo;
+                //4-El anterior del nuevo nodo es la antigua_cola:
+                nuevo_nodo.Anterior = antigua_cola;
+                //5-Ahora la cola es el nuevo_nodo:
+                cola = nuevo_nodo;
+
+            }
         }
         public void insertarPrincipio(int valor)
         {
@@ -49,6 +95,7 @@ namespace ListaDoble
                 nuevo_nodo.Siguiente = antigua_cabeza;
                 //El anterior de la antigua cabeza, será el nuevo nodo
                 antigua_cabeza.Anterior = nuevo_nodo;
+
             }
         }
     }
@@ -66,5 +113,6 @@ namespace ListaDoble
 
         internal Nodo Siguiente { get => siguiente; set => siguiente = value; }
         internal Nodo Anterior { get => anterior; set => anterior = value; }
+        internal int Valor { get => valor;  }
     }
 }
